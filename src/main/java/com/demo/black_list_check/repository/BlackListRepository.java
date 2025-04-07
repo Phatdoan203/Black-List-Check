@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BlackListRepository extends JpaRepository<BlackList, Integer> {
+    BlackList findByFullName(String fullName);
+    BlackList findByAddress(String address);
+    BlackList findByDob(String dob);
 }
