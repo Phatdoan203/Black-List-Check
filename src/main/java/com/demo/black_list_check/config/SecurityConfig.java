@@ -22,6 +22,11 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("api/excel/upload").hasRole("ADMIN")
+                .requestMatchers("api/checking/isMatch").hasRole("USER")
+                .requestMatchers("api/checking/find").hasRole("USER")
+                .requestMatchers("api/checking/update").hasRole("ADMIN")
+                .requestMatchers("api/checking/delete").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(),

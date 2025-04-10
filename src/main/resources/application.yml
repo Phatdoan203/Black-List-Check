@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=Checking;encrypt=false;trustServerCertificate=true
-    username: sa
-    password: 123456
+    url: jdbc:sqlserver://${DB_HOST}:${DB_PORT};databaseName=${DB_NAME};encrypt=false;trustServerCertificate=true
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   jpa:
@@ -14,12 +14,38 @@ spring:
         format_sql: true
     show-sql: true
 
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: checking-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        string:
+          json:
+            trusted:
+              package:
+
+            type:
+              mapping:
+                transactions:com.demo.black_list_check.entity.Transactions
 
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
 
+
+telegram:
+  bot:
+    token: ${TELEGRAM_BOT_TOKEN}
+    username : ${TELEGRAM_BOT_USERNAME}
+    chatId: ${TELEGRAM_BOT_CHATID}
+
+jwt:
+  secret:
+    key : ${JWT_SECRET_KEY}
 #logging:
 #  level:
 #    org:
